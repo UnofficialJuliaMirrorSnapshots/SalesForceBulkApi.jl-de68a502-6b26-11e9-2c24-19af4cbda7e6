@@ -180,6 +180,7 @@ end
 
 # Wrapper
 # wrapper function for single task
+
 function sf_bulkapi_query(session, query::String, queryall = false)
     query = lowercase(query)
     objects = [x.match for x in eachmatch(r"(?<=from\s)(\w+)",query)]
@@ -201,6 +202,8 @@ function sf_bulkapi_query(session, query::String, queryall = false)
             end
             return res
         end
+    catch
+        return DataFrame()
     finally
         jobcloser(session, job)
     end
